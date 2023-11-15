@@ -1,0 +1,33 @@
+import urllib.request 
+from bs4 import BeautifulSoup
+
+url = "https://articulo.mercadolibre.com.co/MCO-1333040361-celular-iphone-11-64-gb-reacondicionado-auriculares-_JM#polycard_client=recommendations_home_navigation-recommendations&reco_backend=machinalis-homes-univb&reco_client=home_navigation-recommendations&reco_item_pos=1&reco_backend_type=function&reco_id=c35d8ab8-149f-4799-9619-69cad481cd00"
+
+page = urllib.request.urlopen(url)
+
+soup = BeautifulSoup(page,features='html.parser')
+prices = soup.find_all("span", class_="andes-money-amount__fraction")
+for price in prices:
+    print(price.get_text())
+
+
+
+print('\n\nPage Scrapped !!!\n\n')
+
+
+print('\n\nTITLE OF THE PAGE\n\n')
+print(soup.title.string)
+
+print('\n\nALL THE URLs IN THE WEB PAGE\n\n')
+
+all_links = soup.find_all('a')
+
+print('Total number of URLs present = ',len(all_links)) 
+
+print('\n\nLast 5 URLs in the page are : \n')
+
+if len(all_links) > 5 :
+
+  last_5 = all_links[len(all_links)-5:]
+  for url in last_5 :
+    print(url.get('href'))
